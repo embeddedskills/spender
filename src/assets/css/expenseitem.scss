@@ -1,0 +1,8 @@
+.expense{
+    &__list{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+    }
+}
