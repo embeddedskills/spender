@@ -1,11 +1,16 @@
-import home from './components/home';
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Menu from "./pages/Menu";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
-    <Router>{home()}</Router>
+    <div className="container">
+      <main>
+        <Home />
+      </main>
+      <Menu className="menu" />
+    </div>
   );
-}
+};
 
 export default App;
