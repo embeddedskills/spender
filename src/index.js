@@ -1,27 +1,16 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
 import "./index.css";
 import App from "./App";
-import { ExpenseContextProvider } from "./Store/Context";
 
 ReactDOM.render(
-  <ExpenseContextProvider
-    value={{
-      totalExpenses: null,
-      expenses: [],
-      addExpense: (newExpense) => {},
-      removeExpense: (expenseId) => {},
-      filterYear: (year) => {},
-      shownYear: null,
-      selectYear: (year) => {},
-    }}
-  >
+  <StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </ExpenseContextProvider>,
+  </StrictMode>,
   document.getElementById("root")
 );
 

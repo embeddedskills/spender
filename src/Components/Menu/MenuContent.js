@@ -8,7 +8,13 @@ const MenuContent = (props) => {
         <div className="content">
           <ul>
             <li>
-              <NavLink to="/history">History</NavLink>
+              <NavLink to="/Home">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/Income">Income</NavLink>
+            </li>
+            <li>
+              <NavLink to="/Expenses">Expenses</NavLink>
             </li>
             <li>Settings</li>
             <li>Help</li>
