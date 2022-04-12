@@ -1,0 +1,9 @@
+.itemsList {
+  list-style: none;
+  padding: 0;
+}
+
+.itemsList__fallback {
+  color: white;
+  text-align: center;
+}

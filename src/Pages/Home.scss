@@ -1,0 +1,26 @@
+.home {
+  &__header {
+    margin-top: 4rem;
+    background-color: #282c34;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+  &__title {
+    font-size: 3rem;
+    margin-top: 0;
+    color: white;
+  }
+  &__subtitle {
+    position: relative;
+    right: -2rem;
+    text-align: right;
+    color: chartreuse;
+  }
+}
+* {
+  box-sizing: border-box;
+}

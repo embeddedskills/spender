@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 10;
+}
+.content {
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  top: 15%;
+  z-index: 5;
+  font-size: 2.5rem;
+  display: flex;
+  color: white;
+  ul {
+    list-style: none;
+  }
+  li {
+    &:hover {
+      transform: scale(0.93);
+    }
+  }
+
+  a {
+    &:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+.close {
+  position: fixed;
+  right: 15%;
+  bottom: 12%;
+  font-size: 3rem;
+  color: white;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.active {
+  text-decoration: none;
+}
