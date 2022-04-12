@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import "./Expenses.css";
 import ExpenseContext from "../../Stores/ExpenseStore/ExpenseContext";
@@ -7,11 +7,17 @@ import Card from "../UI/Card";
 import ItemsList from "../UI/Items-ItemsList/ItemsList";
 import Filter from "../UI/Filter";
 import Chart from "../UI/Chart/Chart";
+import StatisticsContext from "../../Stores/StatisticsStore/StatisticsContext";
 
 const Expenses = () => {
   const { expenses, removeExpense } = useContext(ExpenseContext);
   const { shownYear, selectYear, filterYear, shownTags, setTag, filterByTags } =
     useContext(YearContext);
+  const { getExpenses } = useContext(StatisticsContext);
+
+  useEffect(() => {
+    getExpenses(expenses);
+  }, [expenses]);
 
   let expensesCharted = expenses;
   if (shownYear !== "all") {
@@ -32,7 +38,7 @@ const Expenses = () => {
       <Filter name="Year" array={filterYear(expenses)} setValue={selectYear} />
       <Chart data={expensesCharted} />
       <Filter
-        name="Tag"
+        name="Category"
         array={filterByTags(expensesCharted)}
         setValue={setTag}
       />

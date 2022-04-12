@@ -5,24 +5,8 @@ import NewInput from "../Components/UI/NewInput/NewInput";
 
 const ExpensesPage = () => {
   return (
-    <YearContextProvider
-      value={{
-        shownYear: null,
-        selectYear: (year) => {},
-        filterYear: (yearArray) => {},
-        shownTags: null,
-        setTag: () => {},
-        filterByTags: (objectsArray) => {},
-      }}
-    >
-      <ExpenseContextProvider
-        value={{
-          totalExpenses: null,
-          expenses: [],
-          addExpense: (newExpense) => {},
-          removeExpense: (expenseId) => {},
-        }}
-      >
+    <YearContextProvider>
+      <ExpenseContextProvider>
         <NewInput addItem={"expense"} name={"Expense"} />
         <Expenses />
       </ExpenseContextProvider>

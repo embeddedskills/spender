@@ -4,10 +4,11 @@ import Home from "./Pages/HomePage";
 import { Route, Routes } from "react-router-dom";
 import ExpensesPage from "./Pages/ExpensesPage";
 import IncomePage from "./Pages/IncomePage";
+import StatisticsContextProvider from "./Stores/StatisticsStore/StatisticsContextProvider";
 
 const App = () => {
   return (
-    <div className="container">
+    <StatisticsContextProvider>
       <main>
         <Routes>
           <Route index path="Home" element={<Home />} />
@@ -17,7 +18,7 @@ const App = () => {
         </Routes>
       </main>
       <Menu className="menu" />
-    </div>
+    </StatisticsContextProvider>
   );
 };
 

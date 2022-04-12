@@ -5,24 +5,8 @@ import NewInput from "../Components/UI/NewInput/NewInput";
 
 const IncomePage = () => {
   return (
-    <YearContextProvider
-      value={{
-        shownYear: null,
-        selectYear: (year) => {},
-        filterYear: (yearArray) => {},
-        shownTags: null,
-        setTag: () => {},
-        filterByTags: (objectsArray) => {},
-      }}
-    >
-      <IncomeContextProvider
-        value={{
-          totalIncome: null,
-          income: [],
-          addIncome: (newExpense) => {},
-          removeIncome: (expenseId) => {},
-        }}
-      >
+    <YearContextProvider>
+      <IncomeContextProvider>
         <NewInput addItem={"income"} name={"Income"} />
         <Income />
       </IncomeContextProvider>
