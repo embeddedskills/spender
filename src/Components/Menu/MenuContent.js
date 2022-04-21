@@ -7,9 +7,9 @@ const MenuContent = (props) => {
     <>
       <div className="wrapper">
         <div className="content">
-          <ul>
+          <ul onClick={props.onClick}>
             <li>
-              <NavLink to="/Home">Home</NavLink>
+              <NavLink to="/Home" >Home</NavLink>
             </li>
             <li>
               <NavLink to="/Income">Income</NavLink>
