@@ -1,3 +1,4 @@
+import { ListItemIcon } from "@material-ui/core";
 import { useState } from "react";
 import YearContext from "./YearAndTagContext";
 
@@ -7,7 +8,6 @@ function YearContextProvider(props) {
   function selectYearHandler(year) {
     setSelectedYear(year);
   }
-
   function filterYearHandler(yearArray) {
     let extractedYears = yearArray.map((item) => {
       return item.date.getFullYear();

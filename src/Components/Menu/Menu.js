@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
+import "./menu.scss";
 import Backdrop from "../UI/Backdrop";
 import MenuContent from "./MenuContent";
-import "./menu.scss";
 
 /**
  * Header menu function

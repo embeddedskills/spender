@@ -1,46 +1,59 @@
-import { useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./Income.css";
-import YearContext from "../../Stores/YearAndTagStore/YearAndTagContext";
-import IncomeContext from "../../Stores/IncomeStore/IncomeContext";
 import Card from "../UI/Card";
 import ItemsList from "../UI/Items-ItemsList/ItemsList";
 import Filter from "../UI/Filter";
 import Chart from "../UI/Chart/Chart";
-import StatisticsContext from "../../Stores/StatisticsStore/StatisticsContext";
+import { incomeActions } from "../../Stores/redux-store/incomeSlice";
+import useFilter from "../../Hooks/useFilter";
 
 const Income = () => {
-  const { income, removeIncome } = useContext(IncomeContext);
-  const { shownYear, selectYear, filterYear, shownTags, setTag, filterByTags } =
-    useContext(YearContext);
-  const { getIncome } = useContext(StatisticsContext);
+  const [selectedYear, selectYearHandler, filterYearHandler] =
+    useFilter("year");
+  const [selectedTag, selectTagHandler, filterTagHandler] = useFilter("tag");
 
-  useEffect(() => {
-    getIncome(income);
-  }, [income]);
+  const dispatch = useDispatch();
+  const removeIncomeHandler = (key2) => {
+    dispatch(incomeActions.removeIncome(key2));
+  };
 
-  let incomeCharted = income;
-  if (shownYear !== "all") {
-    incomeCharted = income.filter(
-      (incom) => incom.date.getFullYear() == shownYear
+  let incomeData = useSelector((state) => state.income.incomeData);
+  let immutableIncome = JSON.parse(JSON.stringify(incomeData));
+  for (const item of immutableIncome) {
+    item.date = new Date(item.date);
+  }
+
+  let incomeCharted = immutableIncome;
+  if (selectedYear !== "all") {
+    incomeCharted = immutableIncome.filter(
+      (incom) => incom.date.getFullYear() == selectedYear
     );
   }
 
   let incomeListed = incomeCharted;
-  if (shownTags !== "all") {
-    incomeListed = incomeCharted.filter((income) => income.tag == shownTags);
+  if (selectedTag !== "all") {
+    incomeListed = incomeCharted.filter((income) => income.tag == selectedTag);
   }
 
   return (
     <Card className="income">
-      <Filter name="Year" array={filterYear(income)} setValue={selectYear} />
-      <Chart data={incomeCharted} />
+      <Filter
+        name="Year"
+        array={filterYearHandler(immutableIncome)}
+        setValue={selectYearHandler}
+      />
+      <Chart data={incomeListed} />
       <Filter
         name="Category"
-        array={filterByTags(incomeCharted)}
-        setValue={setTag}
+        array={filterTagHandler(incomeCharted)}
+        setValue={selectTagHandler}
       />
-      <ItemsList items={incomeListed} removeItem={removeIncome} name="income" />
+      <ItemsList
+        items={incomeListed}
+        removeItem={removeIncomeHandler}
+        name="income"
+      />
     </Card>
   );
 };

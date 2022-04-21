@@ -1,5 +1,5 @@
-import ExpenseItem from "./Item";
 import "./ItemsList.css";
+import ExpenseItem from "./Item";
 
 const ItemsList = (props) => {
   if (props.items.length === 0) {

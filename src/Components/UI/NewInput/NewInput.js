@@ -1,14 +1,29 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import "./NewInput.css";
 import InputForm from "./InputForm";
-import { useContext } from "react";
-import ExpenseContext from "../../../Stores/ExpenseStore/ExpenseContext";
-import IncomeContext from "../../../Stores/IncomeStore/IncomeContext";
+import { expensesActions } from "../../../Stores/redux-store/expensesSlice";
+import { incomeActions } from "../../../Stores/redux-store/incomeSlice";
 
 const NewInput = (props) => {
   const [isShown, setIsShown] = useState();
-  const { addExpense } = useContext(ExpenseContext);
-  const { addIncome } = useContext(IncomeContext);
+  const dispatch = useDispatch();
+
+  const addExpenseHandler = (data) => {
+    dispatch(expensesActions.addExpense(data));
+  };
+  const addIncomeHandler = (data) => {
+    dispatch(incomeActions.addIncome(data));
+  };
+
+  const addItemHandler = (data) => {
+    if (props.addItem == "expense") {
+      addExpenseHandler(data);
+    } else {
+      addIncomeHandler(data);
+    }
+  };
 
   function isShownHandler() {
     setIsShown((previsShown) => {
@@ -16,13 +31,6 @@ const NewInput = (props) => {
     });
   }
 
-  function addItemHandler(data) {
-    if (props.addItem == "expense") {
-      addExpense(data);
-    } else {
-      addIncome(data);
-    }
-  }
   return (
     <div className="new-input">
       {isShown && (

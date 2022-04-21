@@ -1,13 +1,12 @@
-import { useRef } from "react";
+import { useState } from "react";
 
 import "./InputForm.css";
 
 const InputForm = (props) => {
-  const enteredAmount = useRef();
-  const enteredDate = useRef();
-  const enteredTitle = useRef();
-  const enteredTag = useRef();
-
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
+  const [enteredTag, setEnteredTag] = useState("Food");
   let tagNames = [
     "Food",
     "Drinks",
@@ -18,19 +17,33 @@ const InputForm = (props) => {
     "Computer-related",
   ];
 
+  function titleHandler(event) {
+    setEnteredTitle(event.target.value);
+  }
+  function amountHandler(event) {
+    setEnteredAmount(event.target.value);
+  }
+  function dateHandler(event) {
+    setEnteredDate(event.target.value);
+  }
+  function tagHandler(event) {
+    setEnteredTag(event.target.value);
+  }
+
   function formHandler(event) {
     event.preventDefault();
-    const Data = {
-      key: enteredTitle.current.value + Math.random(),
-      title: enteredTitle.current.value,
-      amount: enteredAmount.current.value,
-      date: new Date(enteredDate.current.value),
-      tag: enteredTag.current.value,
+    const data = {
+      key: enteredTitle + Math.random(),
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: enteredDate,
+      tag: enteredTag,
     };
-    props.addItem(Data);
-    enteredAmount.current.value = "";
-    enteredDate.current.value = "";
-    enteredTitle.current.value = "";
+
+    props.addItem(data);
+    setEnteredAmount("");
+    setEnteredDate("");
+    setEnteredTitle("");
     props.isShown();
   }
 
@@ -43,7 +56,8 @@ const InputForm = (props) => {
             name="title"
             id="title"
             type="text"
-            ref={enteredTitle}
+            value={enteredTitle}
+            onChange={titleHandler}
             required
           />
         </div>
@@ -55,17 +69,32 @@ const InputForm = (props) => {
             type="number"
             min="0.1"
             step="0.1"
-            ref={enteredAmount}
+            value={enteredAmount}
+            onChange={amountHandler}
             required
           />
         </div>
         <div className="new-input__control">
           <label htmlFor="date">Date</label>
-          <input id="date" name="date" type="date" ref={enteredDate} required />
+          <input
+            id="date"
+            name="date"
+            type="date"
+            value={enteredDate}
+            onChange={dateHandler}
+            required
+          />
         </div>
         <div className="new-input__control">
           <label htmlFor="tags">Tags</label>
-          <select id="tags" name="tags" type="check" ref={enteredTag} required>
+          <select
+            id="tags"
+            name="tags"
+            type="check"
+            value={enteredTag}
+            onChange={tagHandler}
+            required
+          >
             {tagNames.map((tag) => {
               return <option key={tag}>{tag}</option>;
             })}

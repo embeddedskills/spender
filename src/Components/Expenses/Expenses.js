@@ -1,50 +1,60 @@
-import { useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./Expenses.css";
-import ExpenseContext from "../../Stores/ExpenseStore/ExpenseContext";
-import YearContext from "../../Stores/YearAndTagStore/YearAndTagContext";
 import Card from "../UI/Card";
 import ItemsList from "../UI/Items-ItemsList/ItemsList";
 import Filter from "../UI/Filter";
 import Chart from "../UI/Chart/Chart";
-import StatisticsContext from "../../Stores/StatisticsStore/StatisticsContext";
+import { expensesActions } from "../../Stores/redux-store/expensesSlice";
+import useFilter from "../../Hooks/useFilter";
 
 const Expenses = () => {
-  const { expenses, removeExpense } = useContext(ExpenseContext);
-  const { shownYear, selectYear, filterYear, shownTags, setTag, filterByTags } =
-    useContext(YearContext);
-  const { getExpenses } = useContext(StatisticsContext);
+  const [selectedYear, selectYearHandler, filterYearHandler] =
+    useFilter("year");
 
-  useEffect(() => {
-    getExpenses(expenses);
-  }, [expenses]);
+  const [selectedTag, selectTagHandler, filterTagHandler] = useFilter("tag");
 
-  let expensesCharted = expenses;
-  if (shownYear !== "all") {
-    expensesCharted = expenses.filter(
-      (expense) => expense.date.getFullYear() == shownYear
+  const dispatch = useDispatch();
+  const removeExpenseHandler = (key2) => {
+    dispatch(expensesActions.removeExpense(key2));
+  };
+
+  let expenseData = useSelector((state) => state.expenses.expensesData);
+  let immutableExpenses = JSON.parse(JSON.stringify(expenseData));
+  for (const item of immutableExpenses) {
+    item.date = new Date(item.date);
+  }
+
+  let expensesCharted = immutableExpenses;
+  if (selectedYear !== "all") {
+    expensesCharted = immutableExpenses.filter(
+      (expense) => expense.date.getFullYear() == selectedYear
     );
   }
 
   let expensesListed = expensesCharted;
-  if (shownTags !== "all") {
+  if (selectedTag !== "all") {
     expensesListed = expensesCharted.filter(
-      (expense) => expense.tag == shownTags
+      (expense) => expense.tag == selectedTag
     );
   }
 
   return (
     <Card className="expenses">
-      <Filter name="Year" array={filterYear(expenses)} setValue={selectYear} />
-      <Chart data={expensesCharted} />
+      <Filter
+        name="Year"
+        array={filterYearHandler(immutableExpenses)}
+        setValue={selectYearHandler}
+      />
+      <Chart data={expensesListed} />
       <Filter
         name="Category"
-        array={filterByTags(expensesCharted)}
-        setValue={setTag}
+        array={filterTagHandler(expensesCharted)}
+        setValue={selectTagHandler}
       />
       <ItemsList
         items={expensesListed}
-        removeItem={removeExpense}
+        removeItem={removeExpenseHandler}
         name="expenses"
       />
     </Card>

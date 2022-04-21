@@ -1,5 +1,5 @@
-import ChartBar from "./ChartBar";
 import "./Chart.css";
+import ChartBar from "./ChartBar";
 
 const Chart = (props) => {
   const chartDatapoints = [
