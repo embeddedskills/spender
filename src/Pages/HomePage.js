@@ -7,8 +7,8 @@ const Home = () => {
       <header className="home__header">
         <h2 className="home__title">Spender</h2>
         <h3 className="home__subtitle">Track your spendings</h3>
-        <Statistics />
       </header>
+      <Statistics />
     </>
   );
 };
